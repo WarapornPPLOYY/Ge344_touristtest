@@ -1,233 +1,255 @@
 <html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
-  integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
-  crossorigin="" />
+<!-- Link library leaflet -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+crossorigin="" />
 
-  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css" />
+ <!-- W3 CSS template -->
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css" />
 
-   <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
-  integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
-  crossorigin="">
-  </script>
-  <style>
- #mapid {
- height: 600px;
- }
- </style>
+ <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+crossorigin="">
+</script>
 
-  <title>Korat of Tourist map</title>
+ <style>
+#mapid {
+height: 800px;
+}
+</style>
+<title>Tourist map</title>
 </head>
 <body>
-  <body bgcolor="#FFFFF0"></body>
-  <center><h1>🌄𝙏𝙤𝙪𝙧𝙞𝙨𝙩 𝙤𝙛 𝙉𝙖𝙠𝙝𝙤𝙣 𝙍𝙖𝙩𝙘𝙝𝙖𝙨𝙞𝙢𝙖🚙</h1></center>
-  <hr>
-  <div class="w3-row">
-  <div id="mapid" class="w3-half"></div>
-  <div id="content" class="w3-half">
-  <table class="w3-table w3-striped">
-  <tr>
-  <th>ชื่อแหล่งท่องเที่ยว</th>
-  <th>ประเภท</th>
-  <th>ระดับ</th>
-  </tr>
-  <tr>
-  <td>น้ำตก A</td>
-  <td>ธรรมชาติ</td>
-  <td>A</td>
-  </tr>
-  </table>
-  </div>
-  </div>
+<br>
+  <center><h1 style="color: white;">𝑷𝒉𝒖𝒌𝒆𝒕 𝑻𝒐𝒖𝒓𝒊𝒔𝒕🏖️⛵</h1></center>
+    <body bgcolor ='#5F9EA0'>
+<br>
+<!-- แบ่งหน้าจอ -->
+<div class="w3-row">
+<div id="mapid" class="w3-half"></div>
+<div id="content" class="w3-half">
+<table class="w3-table w3-striped">
+<tr>
+<th>ชื่อแหล่งท่องเที่ยว</th>
+<th>ประเภท</th>
+<th>ระดับ</th>
+</tr>
+<tr>
+<td>น้ำตก A</td>
+<td>ธรรมชาติ</td>
+<td>A</td>
+</tr>
+</table>
+</div>
+</div>
 
-  <script>
-    //เรียกแผนที่
-  var map = L.map("mapid").setView([14.999553705970111, 102.12338135191544],8);
-  //base map1
-  var enw = L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/NatGeo_World_Map/MapServer/tile/{z}/{y}/{x}").addTo(map);
-  //base map
-  var ewi = L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}").addTo(map);
-  //group layer (1+2)
-  var baseMaps = {
-    //ชื่อชั้นข้อมูล:ตัวแปร
-      Esri_NatGeoWorldMap:enw,
-      Esri_WorldImagery:ewi
-    };
-var tourpoint =  {
-type: "FeatureCollection",
-name: "tour_plk",
-crs: {
-type: "name",
-properties: { name: "urn:ogc:def:crs:OGC:1.3:CRS84" },
+<!-- เรียกแผนที่ขึ้นมาแสดง -->
+<script>
+//เรียกแผนที่
+var map = L.map("mapid").setView([7.94995055194465, 98.33516133184787],11);
+//basemap1
+var osm = L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png").addTo(map);
+//basemap2
+var gsat = L.tileLayer("https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}")
+.addTo(map);
+var OpenTopoMap = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png').addTo(map);
+var Esri_WorldImagery = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}').addTo(map);
+var baseMaps ={
+  //ชื่อชั้นข้อมูล : ตัวแปร
+  OSM:osm,
+  GoogleSat:gsat,
+  OpenTopoMap : OpenTopoMap,
+  Esri_WorldImagery:Esri_WorldImagery,
+};
+//add data
+var tourpoint = {
+    type: "FeatureCollection",
+    name: "tour_plk",
+    crs: {
+      type: "name",
+      properties: { name: "urn:ogc:def:crs:OGC:1.3:CRS84" },
 },
 features: [
+  {
+        type: "Feature",
+        properties: {
+        Name: "ตึกชิโนโปรตุกีส เมืองเก่าภูเก็ต ",
+        Type: "ร้านค้า จุดถ่ายรูป",
+        FID_1: 1358.0,
+        CHANGWAT: "ภูเก็ต",
+        PROVINCE_1: "phuket",
+        REGION: "ภาคใต้",
+        level: "👏🏻👏🏻👏🏻👏🏻",
+     },
+     geometry: {
+        type: "MultiPoint",
+        coordinates: [[98.38750269713657,7.886519040570387,]],
+},
+},
 {
-type: "Feature",
-properties: {
-Name: "ผาเก็บตะวัน",
-Type: "อุทยานและวนอุทยาน",
-FID_1: 1358.0,
-CHANGWAT: "นครราชสีมา",
-PROVINCE_1: "Nakhon Ratchasima",
-REGION: "ภาคอีสาน",
-level: "🌟🌟🌟🌟",
+        type: "Feature",
+        properties: {
+        Name: "แหลมพรหมเทพ ",
+        Type: "ธรรมชาติ",
+        FID_1: 1357.0,
+        CHANGWAT: "ภูเก็ต",
+        PROVINCE_1: "phuket",
+        REGION: "ภาคใต้",
+        level: "👏🏻👏🏻👏🏻👏🏻👏🏻",
+},
+      geometry: {
+       type: "MultiPoint",
+       coordinates: [[98.30537015480795,7.762028374592771]],
+},
+},
+{
+        type: "Feature",
+        properties: {
+        Name: "จุดชมวิว ผาหินดํา",
+        Type: "ธรรมชาติ",
+        FID_1: 1362.0,
+        CHANGWAT: "ภูเก็ต",
+        PROVINCE_1: "Phuket",
+        REGION: "ภาคใต้",
+        level: "👏🏻👏🏻👏🏻👏🏻👏🏻",
+},
+      geometry: {
+       type: "MultiPoint",
+       coordinates: [[98.2976501793197, 7.783060134690346]],
+},
+},
+{
+        type: "Feature",
+        properties: {
+        Name: "หาดไม้ขาว",
+        Type: "ธรรมชาติ",
+        FID_1: 1364.0,
+        CHANGWAT: "ภูเก็ต",
+        PROVINCE_1: "Phuket",
+        REGION: "ภาคใต้",
+        level: "👏🏻👏🏻👏🏻👏🏻👏🏻",
+},
+      geometry: {
+       type: "MultiPoint",
+       coordinates: [[98.29902172359559, 8.134848852640479]],
+},
+},
+{
+       type: "Feature",
+       properties: {
+       Name: "หาดป่าตอง",
+       Type: "ธรรมชาติ",
+       FID_1: 1355.0,
+       CHANGWAT: "ภูเก็ต",
+       PROVINCE_1: "Phuket",
+       REGION: "ภาคใต้",
+       level: "👏🏻👏🏻👏🏻👏🏻",
+},
+    geometry: {
+     type: "MultiPoint",
+     coordinates: [[98.29544328430488,7.8962155893022805]],
+},
+},
+{
+       type: "Feature",
+       properties: {
+       Name: "วัดพระใหญ่ ยอดเขานาคเกิด ",
+       Type: "วัฒนธรรม",
+       FID_1: 1365.0,
+       CHANGWAT: "ภูเก็ต",
+       PROVINCE_1: "Phuket",
+       REGION: "ภาคใต้",
+       level: "👏🏻👏🏻👏🏻👏🏻👏🏻",
+},
+     geometry: {
+      type: "MultiPoint",
+      coordinates: [[98.31282146856057, 7.827591754187477]],
+},
+},
+{
+       type: "Feature",
+       properties: {
+       Name: "น้ำตกกะทู้ ",
+       Type: "ธรรมชาติ",
+       FID_1: 733.0,
+       CHANGWAT: "ภูเก็ต",
+       PROVINCE_1: "Phuket",
+       REGION: "ภาคใต้",
+       level: "👏🏻👏🏻👏🏻👏🏻",
+},
+   geometry: {
+    type: "MultiPoint",
+    coordinates: [[98.32289426830073,7.934611512251121]],
+},
+},
+{
+       type: "Feature",
+       properties: {
+       Name: "สถานแสดงพันธุ์สัตว์น้ำภูเก็ต",
+       Type: "สถานที่จัดแสดงสัตว์น้ำ",
+       FID_1: 1359.0,
+       CHANGWAT: "ภูเก็ต",
+       PROVINCE_1: "Phuket",
+       REGION: "ภาคใต้",
+       level: "👏🏻👏🏻👏🏻👏🏻",
+},
+   geometry: {
+    type: "MultiPoint",
+    coordinates: [[98.40791595981072,7.8035182162457 ]],
+},
+},
+{
+      type: "Feature",
+      properties: {
+      Name: "หาดนุ้ย",
+      Type: "ธรรมชาติ",
+      FID_1: 603.0,
+      CHANGWAT: "ภูเก็ต",
+      PROVINCE_1: "phuket",
+      REGION: "ภาคใต้",
+      level: "👏🏻👏🏻👏🏻👏🏻👏🏻",
+},
+    geometry: {
+     type: "MultiPoint",
+     coordinates: [[98.3063898701393,7.76780330221613]],
+},
+},
+{
+       type: "Feature",
+       properties: {
+       Name: "บานาน่าบีช",
+       Type: "ธรรมชาติ",
+       FID_1: 611.0,
+       CHANGWAT: "ภูเก็ต",
+       PROVINCE_1: "phuket",
+       REGION: "ภาคใต้",
+       level: "👏🏻👏🏻👏🏻👏🏻👏🏻",
+},
+   geometry: { type: "MultiPoint", coordinates: [[98.27653135027377,8.041988473419618]] },
+},
+{
+       type: "Feature",
+       properties: {
+       Name: "Tiger Kingdom Phuket",
+       Type: "สวนสัตว์",
+       FID_1: 1370.0,
+       CHANGWAT: "ภูเก็ต",
+       PROVINCE_1: "Phuket",
+       REGION: "ภาคใต้",
+       level: "👏🏻👏🏻👏🏻👏🏻",
 },
 geometry: {
-type: "MultiPoint",
-coordinates: [[101.92892970555663, 14.333361340431644]],
-},
-},
-{
-type: "Feature",
-properties: {
-Name: "อุทยานแห่งชาติเขาใหญ่",
-Type: "อุทยานและวนอุทยาน",
-FID_1: 1357.0,
-CHANGWAT: "นครราชสีมา",
-PROVINCE_1: "NakhonRatchasima ",
-REGION: "ภาคอีสาน",
-level: "🌟🌟🌟🌟",
-},
-geometry: {
-type: "MultiPoint",
-coordinates: [[101.36524970032279, 14.432254511409033]],
-},
-},
-{
-  type: "Feature",
-  properties: {
-  Name: "สวนสัตว์นครราชสีมา",
-  Type: "กิจกรรมพิเศษ",
-  FID_1: 1362.0,
-  CHANGWAT: "นครราชสีมา",
-  PROVINCE_1: "NakhonRatchasima ",
-  REGION: "ภาคอีสาน",
-  level: "🌟🌟🌟🌟",
-  },
-  geometry: {
-  type: "MultiPoint",
-  coordinates: [[102.07453571068504, 14.850829481317234]],
-},
-},
-{
-  type: "Feature",
-  properties: {
-  Name: "Scenical World ",
-  Type: "กิจกรรมพิเศษ",
-  FID_1: 1364.0,
-  CHANGWAT: "นครราชสีมา",
-  PROVINCE_1: "NakhonRatchasima ",
-  REGION: "ภาคอีสาน",
-  level: "🌟🌟🌟🌟",
-  },
-  geometry: {
-  type: "MultiPoint",
-  coordinates: [[101.37830983027261, 14.538405249129314]],
-},
-},
-{
-  type: "Feature",
-  properties: {
-  Name: "อุทยานประวัติศาสตร์พิมาย",
-  Type: "อุทยานและวนอุทยาน",
-  FID_1: 1355.0,
-  CHANGWAT: "นครราชสีมา",
-  PROVINCE_1: "NakhonRatchasima ",
-  REGION: "ภาคอีสาน",
-  level: "🌟🌟🌟🌟",
-  },
-  geometry: {
-  type: "MultiPoint",
-  coordinates: [[102.49406552537455, 15.220887141291781]],
-},
-},
-{
-  type: "Feature",
-  properties: {
-  Name: "วัดหลวงพ่อโต",
-  Type: "วัฒนธรรม",
-  FID_1: 1365.0,
-  CHANGWAT: "นครราชสีมา",
-  PROVINCE_1: "NakhonRatchasima ",
-  REGION: "ภาคอีสาน",
-  level: "🌟🌟🌟🌟",
-  },
-  geometry: {
-  type: "MultiPoint",
-  coordinates: [[101.73237957928283, 14.87300816530885]],
-},
-},
-{
-  type: "Feature",
-  properties: {
-  Name: "อนุเสาวรีย์ท้าวสุรนารี",
-  Type: "วัฒนธรรม",
-  FID_1: 733.0,
-  CHANGWAT: "นครราชสีมา",
-  PROVINCE_1: "NakhonRatchasima ",
-  REGION: "ภาคอีสาน",
-  level: "🌟🌟🌟🌟",
-  },
-  geometry: {
-  type: "MultiPoint",
-  coordinates: [[ 102.09805731061819, 14.974897850200113]],
-},
-},
-{
-  type: "Feature",
-  properties: {
-  Name: "เขายายเที่ยง",
-  Type: "ธรรมชาติ,กิจกรรมพิเศษ",
-  FID_1: 1359.0,
-  CHANGWAT: "นครราชสีมา",
-  PROVINCE_1: "NakhonRatchasima ",
-  REGION: "ภาคอีสาน",
-  level: "🌟🌟🌟🌟",
-  },
-  geometry: {
-  type: "MultiPoint",
-  coordinates: [[101.56726366101421, 14.849497391222794]],
-},
-},
-{
-  type: "Feature",
-  properties: {
-  Name: "Flora Park วังน้ำเขียว",
-  Type: "กิจกรรมพิเศษ",
-  FID_1: 603.0,
-  CHANGWAT: "นครราชสีมา",
-  PROVINCE_1: "NakhonRatchasima ",
-  REGION: "ภาคอีสาน",
-  level: "🌟🌟🌟🌟",
-  },
-  geometry: {
-  type: "MultiPoint",
-  coordinates: [[101.79522179733071, 14.393742159909888, ]],
-},
-},
-{
-  type: "Feature",
-  properties: {
-  Name: "วัดบ้านไร่",
-  Type: "วัฒนธรรม",
-  FID_1: 611.0,
-  CHANGWAT: "นครราชสีมา",
-  PROVINCE_1: "NakhonRatchasima ",
-  REGION: "ภาคอีสาน",
-  level: "🌟🌟🌟🌟",
-  },
-  geometry: {
-  type: "MultiPoint",
-  coordinates: [[101.74048116305374, 15.346909500927316, ]],
+ type: "MultiPoint",
+ coordinates: [[98.33002345245342, 7.907280801973478]],
 },
 },
 ],
 };
-
 //add marker and popup
 var tourLayer = L.geoJSON(tourpoint, {
 pointToLayer: function (feature, latlng) {
@@ -247,7 +269,7 @@ document
 });
 },
 }).addTo(map);
-//link table with popup and marker
+// link lable with popup control
 var cont = "";
 cont += "<table class='w3-table w3-striped'>";
 cont += "<tr>";
@@ -265,283 +287,165 @@ cont += "</tr>";
 cont += "</table>";
 console.log(cont);
 document.getElementById("content").innerHTML = cont;
-
 //create polygon
-var polygonGeoJson = {
+var polygonGeoJson =
+{
   "type": "FeatureCollection",
   "features": [
     {
       "type": "Feature",
-      "properties": {
-        "stroke": "#e8d978",
-        "stroke-width": 2,
-        "stroke-opacity": 1,
-        "fill": "#3923e1",
-        "fill-opacity": 0.5
-      },
+      "properties": {},
       "geometry": {
         "type": "Polygon",
         "coordinates": [
           [
             [
-              101.38458251953125,
-              15.326571801420842
+              98.28781127929688,
+              8.199257231587127
             ],
             [
-              101.39556884765624,
-              15.072123545811683
+              98.30429077148438,
+              8.104098156830672
             ],
             [
-              101.41754150390625,
-              15.00581078905935
+              98.27682495117186,
+              8.076905704047249
             ],
             [
-              101.436767578125,
-              14.875778165434696
+              98.27545166015625,
+              8.040192988623229
             ],
             [
-              101.414794921875,
-              14.830646447732653
+              98.29193115234374,
+              8.019795598710425
             ],
             [
-              101.348876953125,
-              14.774882506516272
+              98.27133178710938,
+              7.984437700606046
             ],
             [
-              101.2884521484375,
-              14.732386081418454
+              98.2781982421875,
+              7.953157008138382
             ],
             [
-              101.2335205078125,
-              14.743010965702727
+              98.25759887695312,
+              7.932755270460433
             ],
             [
-              101.19232177734374,
-              14.745667105779793
+              98.29330444335938,
+              7.902830891387267
             ],
             [
-              101.20880126953125,
-              14.676596946649664
+              98.26995849609375,
+              7.8892281831852875
             ],
             [
-              101.2060546875,
-              14.575609038170498
+              98.27545166015625,
+              7.866102552589316
             ],
             [
-              101.19232177734374,
-              14.557000943089454
+              98.2891845703125,
+              7.789914903590689
             ],
             [
-              101.21429443359375,
-              14.519780046326085
+              98.30154418945312,
+              7.779029819064993
             ],
             [
-              101.2335205078125,
-              14.487871434931572
+              98.30429077148438,
+              7.761340954339459
             ],
             [
-              101.23077392578124,
-              14.44797921378886
+              98.34274291992188,
+              7.783111758889569
             ],
             [
-              101.2115478515625,
-              14.368173317117904
+              98.37295532226562,
+              7.844336075064974
             ],
             [
-              101.25,
-              14.320276096900685
+              98.39630126953125,
+              7.807602562408763
             ],
             [
-              101.26922607421875,
-              14.267044974240177
+              98.4100341796875,
+              7.802160285513333
             ],
             [
-              101.37908935546874,
-              14.245749000772165
+              98.40866088867186,
+              7.833452408875337
             ],
             [
-              101.62078857421874,
-              14.240424693263611
+              98.404541015625,
+              7.871543993594737
             ],
             [
-              101.68121337890625,
-              14.267044974240177
+              98.4210205078125,
+              7.878345694374158
             ],
             [
-              101.67022705078125,
-              14.320276096900685
+              98.44573974609375,
+              7.881066343407005
             ],
             [
-              101.74713134765625,
-              14.32825967774278
+              98.4375,
+              7.910992301186667
             ],
             [
-              101.88995361328125,
-              14.288338935138425
+              98.39767456054688,
+              7.947716643884279
             ],
             [
-              101.98333740234375,
-              14.221788628397572
+              98.40042114257812,
+              7.98851761453913
             ],
             [
-              102.0355224609375,
-              14.181849032477334
+              98.4210205078125,
+              7.993957436359008
             ],
             [
-              102.1343994140625,
-              14.133912230516334
+              98.42239379882812,
+              8.04563211947839
             ],
             [
-              102.249755859375,
-              14.115267411122709
+              98.4375,
+              8.074186357935279
             ],
             [
-              102.38433837890625,
-              14.133912230516334
+              98.4375,
+              8.091861780114721
             ],
             [
-              102.56011962890625,
-              14.227113375214987
+              98.41690063476561,
+              8.097300215669739
             ],
             [
-              102.68096923828124,
-              14.314953551894586
+              98.39355468749999,
+              8.083703989184253
             ],
             [
-              102.66448974609375,
-              14.336242974455658
+              98.3660888671875,
+              8.117693694520147
             ],
             [
-              102.59307861328125,
-              14.352208714914282
+              98.3441162109375,
+              8.120412746865856
             ],
             [
-              102.58209228515625,
-              14.392118083661728
+              98.33724975585938,
+              8.172071236432545
             ],
             [
-              102.59307861328125,
-              14.453298590545614
+              98.31802368164062,
+              8.18702376340182
             ],
             [
-              102.601318359375,
-              14.503826315249
+              98.30017089843749,
+              8.19382018104659
             ],
             [
-              102.5518798828125,
-              14.511803324514721
-            ],
-            [
-              102.48870849609375,
-              14.557000943089454
-            ],
-            [
-              102.45025634765625,
-              14.753635331540442
-            ],
-            [
-              102.44476318359375,
-              14.798783094530657
-            ],
-            [
-              102.5518798828125,
-              14.82268104887796
-            ],
-            [
-              102.5518798828125,
-              14.907630165799675
-            ],
-            [
-              102.6617431640625,
-              14.923554399044052
-            ],
-            [
-              102.74688720703125,
-              15.011116568017886
-            ],
-            [
-              102.777099609375,
-              15.072123545811683
-            ],
-            [
-              102.85400390625,
-              15.156973713377667
-            ],
-            [
-              102.919921875,
-              15.188783763403267
-            ],
-            [
-              102.9638671875,
-              15.217938764883565
-            ],
-            [
-              102.95013427734375,
-              15.30273034566194
-            ],
-            [
-              102.97760009765624,
-              15.35570766610093
-            ],
-            [
-              102.9254150390625,
-              15.498679138197133
-            ],
-            [
-              102.799072265625,
-              15.59922947885929
-            ],
-            [
-              102.70294189453125,
-              15.715594652435831
-            ],
-            [
-              102.57659912109375,
-              15.723526226324188
-            ],
-            [
-              102.37335205078125,
-              15.728813770533966
-            ],
-            [
-              102.32940673828125,
-              15.794896464857334
-            ],
-            [
-              102.26348876953125,
-              15.771109173575294
-            ],
-            [
-              102.1563720703125,
-              15.731457491108594
-            ],
-            [
-              102.10968017578125,
-              15.654775665159686
-            ],
-            [
-              102.0135498046875,
-              15.466916214586464
-            ],
-            [
-              101.942138671875,
-              15.448385591512595
-            ],
-            [
-              101.88720703125,
-              15.400727816322217
-            ],
-            [
-              101.67022705078125,
-              15.39543183321259
-            ],
-            [
-              101.44226074218749,
-              15.353059119130279
-            ],
-            [
-              101.38458251953125,
-              15.326571801420842
+              98.28781127929688,
+              8.199257231587127
             ]
           ]
         ]
@@ -551,14 +455,15 @@ var polygonGeoJson = {
 }
 var polygonLayer = L.geoJSON(polygonGeoJson, {
 style: function (feature) {
-return { fillcolor: '#B03060',weight:2,
-       opacity:1,
-       color: '#FFA500', //outline color
-       fillopacity: 0.4};
+return {fillcolor:'#FFCC00',weight:2,
+       opacity: 1,
+       color:'#FFFF99',//Outline bgcolor
+       fillOpacity: 0.4 };
 },
 onEachFeature: function (feature, layer) {
 layer.bindPopup(feature.properties.name);
-layer.on("mouseover", function () {
+
+ layer.on("mouseover", function () {
 layer.openPopup();
 });
 
@@ -568,11 +473,15 @@ layer.closePopup();
 },
 });
 
+//group point+polygon layer
 var overlays = {
-    สถานที่ท่องเที่ยว:tourLayer,
-    ขอบเขต:polygonLayer
+สถานที่ท่องเที่ยว:tourLayer,
+ขอบเขตอุทยาน:polygonLayer
 };
-  L.control.layers(baseMaps,overlays).addTo(map);
+
+//Create layer control
+L.control.layers(baseMaps,overlays).addTo(map);
+
 </script>
 
 </body>
